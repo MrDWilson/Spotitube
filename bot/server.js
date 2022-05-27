@@ -14,7 +14,7 @@ client.on("messageCreate", (message) => {
         let command = message.content.slice(1);
 
         if((command.startsWith("play") || command.startsWith("queue")) && command.includes("spotify")) {
-            message.channel.send("Converting...").then(msg => msg.delete({timeout:"3000"}));
+            message.channel.send("Converting...");
             let url = command.split(' ')[1];
             const data = {
                 url: url
@@ -29,7 +29,10 @@ client.on("messageCreate", (message) => {
             });
         }
     }
-    else if(message.content.includes("Unknown file format"))
+});
+
+client.on("messageEdit", (message) => {
+    if(message.content.includes("Unknown file format"))
     {
         message.delete();
     }
