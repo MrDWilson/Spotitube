@@ -21,8 +21,8 @@ const app = express();
 app.use(express.json());
 
 app.post('/', function(request, response) {
-  const token = async (url) => await (await axios.get(url));
-  let _ = token('http://spotitube_token/').then(resp => {
+  const getUrl = async (url) => await (await axios.get(url));
+  let _ = getUrl('http://spotitube_token/').then(resp => {
       spotifyApi.setAccessToken(resp.data);
       const _ = getSong(request.body.url).then(song => {
         response.send(song);
