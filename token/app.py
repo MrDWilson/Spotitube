@@ -1,8 +1,11 @@
 import os
+from xmlrpc.client import DateTime
 from flask import Flask, redirect
 from flask_session import Session
 import spotipy
 import yaml
+from datetime import datetime, timedelta
+from typing import Optional
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -21,10 +24,18 @@ with open('config.yaml') as f:
 auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-modify-public',
                                            show_dialog=True)
 
+token: Optional[str] = None
+expiry: Optional[DateTime] = None
+
 
 def get_token():
+    if token and expiry < datetime.now():
+        return token
+
     token_info = auth_manager.get_access_token(code)
-    return token_info['access_token']
+    token = token_info['access_token']
+    expiry = datetime.now() + timedelta(seconds=int(token_info['expires_in']))
+    return token
 
 
 def generate_code():

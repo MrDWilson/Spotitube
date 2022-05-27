@@ -30,6 +30,18 @@ services:
       context: ./songs/
       dockerfile: Dockerfile
     restart: unless-stopped
+  spotitube_manager:
+    container_name: spotitube_manager
+    networks:
+      - internal
+      - web
+    environment:
+      LETSENCRYPT_HOST: spotitube-manager.wlsn.xyz
+      VIRTUAL_HOST: spotitube-manager.wlsn.xyz
+    build:
+      context: ./manager/
+      dockerfile: Dockerfile
+    restart: unless-stopped
 networks:
   internal:
     name: internal
