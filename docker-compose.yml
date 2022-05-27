@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  spotitube_playlists:
+    container_name: spotitube_playlists
+    networks:
+      - internal
+      - web
+    build:
+      context: ./playlists/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "5000"
+    environment:
+      LETSENCRYPT_HOST: spotitube.wlsn.xyz
+      VIRTUAL_HOST: spotitube.wlsn.xyz
+  spotitube_token:
+    container_name: spotitube_token
+    networks:
+      - internal
+    build:
+      context: ./token/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+  spotitube_songs:
+    container_name: spotitube_songs
+    networks:
+      - internal
+    build:
+      context: ./songs/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+networks:
+  internal:
+    name: internal
+  web:
+    external:
+      name: web-routing_web
+
