@@ -4,3 +4,4 @@ token/.cache
 .vscode
 */obj
 */bin
+.env
