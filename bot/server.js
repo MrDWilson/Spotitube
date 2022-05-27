@@ -20,9 +20,7 @@ client.on("messageCreate", (message) => {
                 url: url
             };
             makePostRequest("http://spotitube_manager", data).then(res => {
-                let result = `Song(s) are ready to go. Run command:
-                > ~play ` + res.data + `
-                to play.`;
+                let result = 'Song(s) are ready to go. To play, run command `~play ' + res.data + '`'
                 message.channel.send(result);
             });
         }
