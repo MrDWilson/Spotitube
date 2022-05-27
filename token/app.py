@@ -31,7 +31,7 @@ expiry: Optional[DateTime] = None
 def get_token():
     global token
     global expiry
-    if token is not None and expiry is not None and expiry < datetime.now():
+    if token is not None and expiry is not None and expiry > datetime.now():
         print(token + ' : ' + expiry)
         return token
 

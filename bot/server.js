@@ -22,11 +22,17 @@ client.on("messageCreate", (message) => {
             makePostRequest("http://spotitube_manager", data).then(res => {
                 let result = 'Ready. To play, run command `~play ' + res.data + '`'
                 message.channel.send(result);
+            })
+            .catch(_ => {
+                message.channel.send("Failed :(");
             });
         }
         else if(command.startsWith("clearcache")) {
             makeRequest("http://spotitube_manager/clear").then(_ => {
                 message.channel.send("Playlist cache cleared!");
+            })
+            .catch(_ => {
+                message.channel.send("Failed :(");
             });
         }
     }
