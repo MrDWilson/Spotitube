@@ -31,10 +31,6 @@ expiry: Optional[DateTime] = None
 def get_token():
     global token
     global expiry
-    if token:
-        print('Token: ' + token)
-    if expiry:
-        print('Expires on: ' + expiry.strftime("%m/%d/%Y, %H:%M:%S"))
     if token is not None and expiry is not None and expiry < datetime.now():
         return token
 
