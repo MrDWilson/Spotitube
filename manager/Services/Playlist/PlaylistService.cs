@@ -16,6 +16,16 @@ public class PlaylistService : IPlaylistService
         string newPlaylistFile = Path.Join(playlistFolder, playlistFile);
         await File.WriteAllTextAsync(newPlaylistFile, allLinks);
 
-        return playlistName;
+        return "playlist " + playlistName;
+    }
+
+    public void ClearPlaylistCache() 
+    {
+        string? playlistFolder = Environment.GetEnvironmentVariable("PLAYLIST_FOLDER");
+        if(playlistFolder == null)
+        {
+            throw new Exception("PLAYLIST_FOLDER env variable missing");
+        }
+        Directory.GetFiles(playlistFolder).ToList().ForEach(File.Delete);
     }
 }

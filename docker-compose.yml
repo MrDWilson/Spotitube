@@ -1,19 +1,5 @@
 version: '3.8'
 services:
-  spotitube_playlists:
-    container_name: spotitube_playlists
-    networks:
-      - internal
-      - web
-    build:
-      context: ./playlists/
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    expose:
-      - "5000"
-    environment:
-      LETSENCRYPT_HOST: spotitube.wlsn.xyz
-      VIRTUAL_HOST: spotitube.wlsn.xyz
   spotitube_token:
     container_name: spotitube_token
     networks:
@@ -36,17 +22,25 @@ services:
       - internal
       - web
     environment:
-      LETSENCRYPT_HOST: spotitube-manager.wlsn.xyz
-      VIRTUAL_HOST: spotitube-manager.wlsn.xyz
       PLAYLIST_FOLDER: ./playlists
     build:
       context: ./manager/
       dockerfile: Dockerfile
     restart: unless-stopped
-    expose:
-      - "80"
     volumes:
       - ~/playlists:/app/playlists
+  spotitube_bot:
+    container_name: spotitube_bot
+    networks:
+      - internal
+      - web
+    expose:
+      - "80"
+      - "443"
+    build:
+      context: ./bot/
+      dockerfile: Dockerfile
+    restart: unless-stopped
 networks:
   internal:
     name: internal
