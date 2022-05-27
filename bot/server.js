@@ -20,7 +20,10 @@ client.on("messageCreate", (message) => {
                 url: url
             };
             makePostRequest("http://spotitube_manager", data).then(res => {
-                message.channel.send("~play " + res.data);
+                let result = `Song(s) are ready to go. Run command:
+                > ~play ` + res.data + `
+                to play.`;
+                message.channel.send(result);
             });
         }
         else if(command.startsWith("clearcache")) {
