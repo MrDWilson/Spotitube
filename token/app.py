@@ -50,7 +50,7 @@ def process_code(response):
     return auth_manager.parse_response_code(response)
 
 @app.route('/')
-def token():
+def get_token():
     return get_token()
 
 '''

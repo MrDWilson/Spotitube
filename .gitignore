@@ -5,3 +5,5 @@ token/.cache
 */obj
 */bin
 .env
+*/.flask_session
+*/env
