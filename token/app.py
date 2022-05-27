@@ -29,6 +29,8 @@ expiry: Optional[DateTime] = None
 
 
 def get_token():
+    global token
+    global expiry
     if token and expiry < datetime.now():
         return token
 
