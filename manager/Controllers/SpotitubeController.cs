@@ -15,8 +15,13 @@ public class SpotitubeController : ControllerBase
     }
 
     [HttpPost("/")]
-    public string Post([FromBody] UrlRequest request)
+    public IActionResult Post([FromBody] UrlRequest request)
     {
-        return _urlHandler.ParseSpotifyUrl(request.url).Id;
+        if(request.url == null) 
+        {
+            return BadRequest("No URL provided");
+        }
+
+        return Ok(_urlHandler.ParseSpotifyUrl(request.url).Id);
     }
 }

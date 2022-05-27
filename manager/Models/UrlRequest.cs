@@ -1,6 +1,6 @@
 namespace Spotitube.Models;
 
-public struct UrlRequest 
+public class UrlRequest 
 {
-    public string url;
+    public string? url;
 }
