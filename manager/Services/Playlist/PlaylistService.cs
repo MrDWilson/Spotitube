@@ -4,7 +4,8 @@ public class PlaylistService : IPlaylistService
 {
     async public Task<string> Convert(IEnumerable<string> youtubeLinks) 
     {
-        string playlistName = Guid.NewGuid().ToString() + ".txt";
+        string playlistName = Guid.NewGuid().ToString();
+        string playlistFile = playlistName + ".txt";
         string? playlistFolder = Environment.GetEnvironmentVariable("PLAYLIST_FOLDER");
         if(playlistFolder == null)
         {
@@ -12,7 +13,7 @@ public class PlaylistService : IPlaylistService
         }
 
         string allLinks = string.Join(Environment.NewLine, youtubeLinks);
-        string newPlaylistFile = Path.Join(playlistFolder, playlistName);
+        string newPlaylistFile = Path.Join(playlistFolder, playlistFile);
         await File.WriteAllTextAsync(newPlaylistFile, allLinks);
 
         return playlistName;
