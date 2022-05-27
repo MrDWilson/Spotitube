@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Spotitube.Services.Url;
+using Spotitube.Models;
 
 namespace Spotitube.Controllers;
 
@@ -13,9 +14,9 @@ public class SpotitubeController : ControllerBase
         _urlHandler = urlHandler;
     }
 
-    [HttpGet("/")]
-    public string Get()
+    [HttpPost("/")]
+    public string Post([FromBody] UrlRequest request)
     {
-        return _urlHandler.ParseSpotifyUrl("url").Id;
+        return _urlHandler.ParseSpotifyUrl(request.url).Id;
     }
 }
