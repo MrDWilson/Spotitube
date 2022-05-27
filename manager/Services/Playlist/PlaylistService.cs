@@ -2,10 +2,16 @@ namespace Spotitube.Services.Playlist;
 
 public class PlaylistService : IPlaylistService
 {
+    private string GeneratePlaylistName() => 
+        Environment.GetEnvironmentVariable("PLAYLIST_HISTORY")?.ToLower() == "true" 
+            ? Guid.NewGuid().ToString()
+            : "Spotify";
+
     async public Task<string> Convert(IEnumerable<string> youtubeLinks) 
     {
-        string playlistName = Guid.NewGuid().ToString();
-        string playlistFile = playlistName + ".txt";
+        string PLAYLIST_NAME = GeneratePlaylistName();
+        string playlistName = PLAYLIST_NAME;
+        string playlistFile = PLAYLIST_NAME + ".txt";
         string? playlistFolder = Environment.GetEnvironmentVariable("PLAYLIST_FOLDER");
         if(playlistFolder == null)
         {
