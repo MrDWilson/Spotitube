@@ -7,6 +7,8 @@ services:
     build:
       context: ./token/
       dockerfile: Dockerfile
+    environment:
+      PYTHONUNBUFFERED: 1
     restart: unless-stopped
   spotitube_songs:
     container_name: spotitube_songs
