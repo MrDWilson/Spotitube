@@ -15,13 +15,13 @@ public class SpotitubeController : ControllerBase
     }
 
     [HttpPost("/")]
-    public IActionResult Post([FromBody] UrlRequest request)
+    async public Task<IActionResult> Post([FromBody] UrlRequest request)
     {
         if(request.url == null) 
         {
             return BadRequest("No URL provided");
         }
 
-        return Ok(_converterService.Convert(request.url));
+        return Ok(await _converterService.Convert(request.url));
     }
 }
