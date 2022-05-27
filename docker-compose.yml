@@ -42,6 +42,8 @@ services:
       context: ./manager/
       dockerfile: Dockerfile
     restart: unless-stopped
+    expose:
+      - "80"
 networks:
   internal:
     name: internal
