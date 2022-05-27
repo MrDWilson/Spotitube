@@ -1,4 +1,8 @@
 using Spotitube.Services.Url;
+using Spotitube.Services.Spotify;
+using Spotitube.Services.YouTube;
+using Spotitube.Services.Converter;
+using Spotitube.Services.Playlist;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +12,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
+
 builder.Services.AddScoped<IUrlHandler, UrlHandler>();
+builder.Services.AddScoped<ISpotifyService, SpotifyService>();
+builder.Services.AddScoped<IYouTubeService, YouTubeService>();
+builder.Services.AddScoped<IConverterService, ConverterService>();
+builder.Services.AddScoped<IPlaylistService, PlaylistService>();
 
 var app = builder.Build();
 

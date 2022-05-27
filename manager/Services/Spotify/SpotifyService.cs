@@ -1,0 +1,73 @@
+namespace Spotitube.Services.Spotify;
+
+using SpotifyAPI.Web;
+
+public class SpotifyService : ISpotifyService
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public SpotifyService(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    async public Task<IEnumerable<string>> GetAlbumContents(string albumId) 
+    {
+        var spotify = new SpotifyClient(await GetAccessToken());
+
+        var album = await spotify.Albums.Get(albumId);
+
+        List<string> trackIds = new();
+        await foreach(var track in spotify.Paginate(album.Tracks)) 
+        {
+            if(trackIds.Count == 50) 
+            {
+                break;
+            }
+
+            trackIds.Add(track.Id);
+        }
+
+        return trackIds;
+    }
+
+    async public Task<IEnumerable<string>> GetPlaylistContents(string playlistId) 
+    {
+        var spotify = new SpotifyClient(await GetAccessToken());
+
+        var playlist = await spotify.Playlists.GetItems(playlistId);
+
+        List<string> trackIds = new();
+        if(playlist == null) {
+            return new List<string>();
+        }
+
+        await foreach(var track in spotify.Paginate(playlist)) 
+        {
+            if(trackIds.Count == 50) 
+            {
+                break;
+            }
+
+            if(track.Track is FullTrack fullTrack)
+            {
+                trackIds.Add(fullTrack.Id);
+            }
+        }
+
+        return trackIds;
+    }
+
+    async private Task<string> GetAccessToken() 
+    {
+        var httpClient = _httpClientFactory.CreateClient();
+        var httpResponseMessage = await httpClient.GetAsync("http://spotitube_token/");
+
+        if (httpResponseMessage.IsSuccessStatusCode)
+        {
+            return await httpResponseMessage.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            throw new Exception("Could not retrieve Spotify token");
+        }
+    }
+}

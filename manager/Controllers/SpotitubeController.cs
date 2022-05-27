@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
-using Spotitube.Services.Url;
 using Spotitube.Models;
+using Spotitube.Services.Converter;
 
 namespace Spotitube.Controllers;
 
 [ApiController]
 public class SpotitubeController : ControllerBase
 {
-    private readonly IUrlHandler _urlHandler;
+    private IConverterService _converterService;
 
-    public SpotitubeController(IUrlHandler urlHandler)
+    public SpotitubeController(IConverterService converterService)
     {
-        _urlHandler = urlHandler;
+        _converterService = converterService;
     }
 
     [HttpPost("/")]
@@ -22,6 +22,6 @@ public class SpotitubeController : ControllerBase
             return BadRequest("No URL provided");
         }
 
-        return Ok(_urlHandler.ParseSpotifyUrl(request.url).Id);
+        return Ok(_converterService.Convert(request.url));
     }
 }

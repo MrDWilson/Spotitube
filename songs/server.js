@@ -12,32 +12,24 @@ const yaml = require('js-yaml');
 const fs   = require('fs');
 const config = yaml.load(fs.readFileSync('config.yaml', 'utf8'));
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: config.id,
-  clientSecret: config.secret,
-  redirectUri: config.redirect_uri
-});
+const spotifyApi = new SpotifyWebApi();
 
 const spotifyToYoutube = SpotifyToYoutube(spotifyApi);
 
 async function getSong(song) {
-  return 'https://www.youtube.com/watch?v=' + await spotifyToYoutube(song);
+  return await spotifyToYoutube(song);
 }
 
 // App
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
-app.post('/song', function(request, response) {
+app.post('/', function(request, response) {
   const token = async (url) => await (await axios.get(url));
-  let res = token('http://spotitube_token/').then(resp => {
+  let _ = token('http://spotitube_token/').then(resp => {
       spotifyApi.setAccessToken(resp.data);
-      const newSong = getSong(request.body.url).then(song => {
-	console.log(song);
+      const _ = getSong(request.body.url).then(song => {
+	      console.log(song);
         response.send(song);
       });
     });
