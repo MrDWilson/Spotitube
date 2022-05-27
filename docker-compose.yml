@@ -38,12 +38,15 @@ services:
     environment:
       LETSENCRYPT_HOST: spotitube-manager.wlsn.xyz
       VIRTUAL_HOST: spotitube-manager.wlsn.xyz
+      PLAYLIST_FOLDER: ./playlists
     build:
       context: ./manager/
       dockerfile: Dockerfile
     restart: unless-stopped
     expose:
       - "80"
+    volumes:
+      - ~/playlists:/playlists
 networks:
   internal:
     name: internal
