@@ -4,3 +4,5 @@ token/.cache
 .vscode
 */obj
 */bin
+*/.flask_session
+*/env
