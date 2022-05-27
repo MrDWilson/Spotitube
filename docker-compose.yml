@@ -9,6 +9,10 @@ services:
       dockerfile: Dockerfile
     environment:
       PYTHONUNBUFFERED: 1
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      SPOTIFY_REDIRECT_URI: ${SPOTIFY_REDIRECT_URI}
+      SPOTIFY_CODE: ${SPOTIFY_CODE}
     restart: unless-stopped
   spotitube_songs:
     container_name: spotitube_songs
@@ -22,7 +26,6 @@ services:
     container_name: spotitube_manager
     networks:
       - internal
-      - web
     environment:
       PLAYLIST_FOLDER: ./playlists
     build:
