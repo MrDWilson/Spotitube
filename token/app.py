@@ -38,6 +38,7 @@ def get_token():
     token_info = auth_manager.get_access_token(code)
     token = token_info['access_token']
     expiry = datetime.now() + timedelta(seconds=int(token_info['expires_in']))
+    print(token + ' : ' + expiry)
     return token
 
 
