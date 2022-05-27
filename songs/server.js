@@ -8,10 +8,6 @@ const axios = require('axios');
 const PORT = 80;
 const HOST = '0.0.0.0';
 
-const yaml = require('js-yaml');
-const fs   = require('fs');
-const config = yaml.load(fs.readFileSync('config.yaml', 'utf8'));
-
 const spotifyApi = new SpotifyWebApi();
 
 const spotifyToYoutube = SpotifyToYoutube(spotifyApi);
