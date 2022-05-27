@@ -32,7 +32,7 @@ def get_token():
     global token
     global expiry
     if token is not None and expiry is not None and expiry > datetime.now():
-        print(token + ' : ' + expiry)
+        print(token + ' : ' + str(expiry))
         return token
 
     token_info = auth_manager.get_access_token(code)
