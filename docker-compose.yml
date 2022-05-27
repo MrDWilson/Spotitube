@@ -37,6 +37,8 @@ services:
     expose:
       - "80"
       - "443"
+    environment:
+      TOKEN: ${TOKEN}
     build:
       context: ./bot/
       dockerfile: Dockerfile
