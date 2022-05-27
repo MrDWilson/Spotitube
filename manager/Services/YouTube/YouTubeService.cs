@@ -23,7 +23,7 @@ public class YouTubeService : IYouTubeService
         foreach(var track in trackIds) 
         {
             tracks.Add(await GetTrackLink(httpClient, track));
-            await Task.Delay(100);
+            await Task.Delay(10);
         }
 
         return tracks;

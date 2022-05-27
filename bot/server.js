@@ -20,7 +20,7 @@ client.on("messageCreate", (message) => {
                 url: url
             };
             makePostRequest("http://spotitube_manager", data).then(res => {
-                let result = 'Song(s) are ready to go. To play, run command `~play ' + res.data + '`'
+                let result = 'Ready. To play, run command `~play ' + res.data + '`'
                 message.channel.send(result);
             });
         }
@@ -29,13 +29,6 @@ client.on("messageCreate", (message) => {
                 message.channel.send("Playlist cache cleared!");
             });
         }
-    }
-});
-
-client.on("messageEdit", (message) => {
-    if(message.content.includes("Unknown file format"))
-    {
-        message.delete();
     }
 });
 
