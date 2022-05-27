@@ -3,7 +3,6 @@ from xmlrpc.client import DateTime
 from flask import Flask, redirect
 from flask_session import Session
 import spotipy
-import yaml
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -13,13 +12,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
 
-with open('config.yaml') as f:
-    config = yaml.full_load(f)
-    os.environ['SPOTIPY_CLIENT_ID'] = config['id']
-    os.environ['SPOTIPY_CLIENT_SECRET'] = config['secret']
-    os.environ['SPOTIPY_REDIRECT_URI'] = config['redirect_uri']
-    code = config['user_code']
-
+code = os.environ['SPOTIFY_CODE']
 
 auth_manager = spotipy.oauth2.SpotifyOAuth(scope='playlist-modify-public',
                                            show_dialog=True)
@@ -32,13 +25,11 @@ def get_token():
     global token
     global expiry
     if token is not None and expiry is not None and expiry > datetime.now():
-        print(token + ' : ' + str(expiry))
         return token
 
     token_info = auth_manager.get_access_token(code)
     token = token_info['access_token']
     expiry = datetime.now() + timedelta(seconds=int(token_info['expires_in']))
-    print(token + ' : ' + str(expiry))
     return token
 
 
@@ -53,10 +44,5 @@ def process_code(response):
 def request_token():
     return get_token()
 
-'''
-Following lines allow application to be run more conveniently with
-`python app.py` (Make sure you're using python3)
-(Also includes directive to leverage pythons threading capacity.)
-'''
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
