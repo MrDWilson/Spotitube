@@ -25,7 +25,6 @@ app.post('/', function(request, response) {
   let _ = token('http://spotitube_token/').then(resp => {
       spotifyApi.setAccessToken(resp.data);
       const _ = getSong(request.body.url).then(song => {
-	      console.log(song);
         response.send(song);
       });
     });

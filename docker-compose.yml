@@ -46,7 +46,7 @@ services:
     expose:
       - "80"
     volumes:
-      - ~/playlists:/playlists
+      - ~/playlists:/app/playlists
 networks:
   internal:
     name: internal
