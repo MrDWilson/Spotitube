@@ -45,7 +45,7 @@ To set environment variables, it is recommended that you place a
 | TRACK_DELAY | The delay in milliseconds between Spotify API track requests. This should be left as default unless you are having issues with rate limiting. Try increasing it slightly if you do have issues. | 10 |
 | USE_BOT | Whether to enable the included Discord bot. Setting this to false will turn this into just an API. | True |
 | BOT_TOKEN | The authorised token for you registed Discord bot. | Optional, only needed if `USE_BOT` is set to `True` |
-| BOT_COMMAND_PREFIX | The prefix to look for in Discord commands. | Optional, only needed if `USE_BOT` is set to `True` |
+| BOT_COMMAND_PREFIXES | The prefixes to look for in Discord commands. | Optional, only needed if `USE_BOT` is set to `True`. Comma seperate values. |
 | GENERATE_PLAYLISTS | Whether to wrap playlists in .txt files seperated by new lines. This can be useful as some Discord music bots can consume text playlist files. This will simplify album and playlist results by returning just the playlist name, rather than a set of links. | True |
 | PLAYLIST_FOLDER | The folder on the host machine to map for playlist file saving. | Optional, only required if `GENERATE_PLAYLISTS` is set to `True`. |
 | PLAYLIST_HISTORY | Whether to randomly generate the playlist names as GUIDs to allow history. If `False`, playlists will all be saved as `Spotify`, so will be overritten each time. | False |

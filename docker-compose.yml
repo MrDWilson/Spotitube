@@ -50,7 +50,7 @@ services:
       - "443"
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
-      BOT_COMMAND_PREFIX: ${BOT_COMMAND_PREFIX}
+      BOT_COMMAND_PREFIXES: ${BOT_COMMAND_PREFIXES}
     build:
       context: ./bot/
       dockerfile: Dockerfile
