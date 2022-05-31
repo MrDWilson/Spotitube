@@ -52,8 +52,7 @@ To set environment variables, it is recommended that you place a
 | COMPOSE_PATH_SEPARATOR | The character used to separate the values in `COMPOSE_FILE`. Recommend to use `,`. | The default is `:` on Linux and macOS, and `;` on Windows. It is recommended to set this value to `,` to remove this difference. |
 | BOT_TOKEN | The authorised token for you registed Discord bot. | Optional, only needed if you are running the bot. |
 | BOT_COMMAND_PREFIXES | The prefixes to look for in Discord commands. | Optional, only needed if you are running the bot. Comma separate values. |
-| GENERATE_PLAYLISTS | Whether to wrap playlists in .txt files separated by new lines. This can be useful as some Discord music bots can consume text playlist files. This will simplify album and playlist results by returning just the playlist name, rather than a set of links. | False |
-| PLAYLIST_FOLDER | The folder on the host machine to map for playlist file saving. | Optional, only required if `GENERATE_PLAYLISTS` is set to `True`. Defaults to `./`, but it is recommended to change this. |
+| PLAYLIST_FOLDER | The folder on the host machine to map for playlist file saving. | Optional, only required if using the `generatePlaylists` flag on the API. Defaults to `./`, but it is recommended to change this. |
 | PLAYLIST_HISTORY | Whether to randomly generate the playlist names as GUIDs to allow history. If `False`, playlists will all be saved as `Spotify`, so will be overritten each time. | False |
 
 Help

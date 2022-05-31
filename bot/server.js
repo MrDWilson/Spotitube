@@ -41,7 +41,8 @@ client.on("messageCreate", (message) => {
             }
 
             const data = {
-                url: url
+                url: url,
+                generatePlaylists: true
             };
             makePostRequest("http://spotitube_manager", data).then(res => {
                 const link = res.data.link;

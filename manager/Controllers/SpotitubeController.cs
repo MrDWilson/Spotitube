@@ -25,7 +25,7 @@ public class SpotitubeController : ControllerBase
             return BadRequest("No URL provided");
         }
 
-        var result = await _converterService.Convert(request.url);
+        var result = await _converterService.Convert(request.url, request.generatePlaylists);
         if(result == null) 
         {
             return BadRequest("Failed to convert, is the link valid?");
