@@ -29,11 +29,11 @@ services:
       - internal
     environment:
       PLAYLIST_FOLDER: ${PLAYLIST_FOLDER}
-      PLAYLIST_HISTORY: ${PLAYLIST_HISTORY}
-      PORT: ${PORT}
-      MAX_TRACK_COUNT: ${MAX_TRACK_COUNT}
-      TRACK_DELAY: ${TRACK_DELAY}
-      GENERATE_PLAYLISTS: ${GENERATE_PLAYLISTS}
+      PLAYLIST_HISTORY: ${PLAYLIST_HISTORY:-False}
+      PORT: ${PORT:-80}
+      MAX_TRACK_COUNT: ${MAX_TRACK_COUNT:-50}
+      TRACK_DELAY: ${TRACK_DELAY:-10}
+      GENERATE_PLAYLISTS: ${GENERATE_PLAYLISTS:-True}
     build:
       context: ./manager/
       dockerfile: Dockerfile
