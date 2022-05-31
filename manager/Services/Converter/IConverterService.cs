@@ -3,5 +3,5 @@ using Spotitube.Models;
 
 public interface IConverterService
 {
-    public Task<UrlResult> Convert(string url);
+    public Task<UrlResult?> Convert(string url);
 }

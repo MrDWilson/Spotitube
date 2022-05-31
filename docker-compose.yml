@@ -27,6 +27,7 @@ services:
     container_name: spotitube_manager
     networks:
       - spotitube
+      - web
     environment:
       PLAYLIST_FOLDER: /app/playlists
       PLAYLIST_HISTORY: ${PLAYLIST_HISTORY:-False}
@@ -34,13 +35,20 @@ services:
       MAX_TRACK_COUNT: ${MAX_TRACK_COUNT:-50}
       TRACK_DELAY: ${TRACK_DELAY:-10}
       GENERATE_PLAYLISTS: ${GENERATE_PLAYLISTS:-True}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
     build:
       context: ./manager/
       dockerfile: Dockerfile
+    expose:
+      - '${PORT:-80}'
     restart: unless-stopped
     volumes:
       - ${PLAYLIST_FOLDER:-./}:/app/playlists
 networks:
   spotitube:
     name: spotitube
+  web:
+    external:
+      name: ${EXTERNAL_NETWORK_NAME}
 
