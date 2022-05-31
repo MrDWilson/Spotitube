@@ -14,7 +14,7 @@ client.on('ready', () => {
 });
 
 client.on("messageCreate", (message) => {
-    let commandPrefixes = process.env.BOT_COMMAND_PREFIXES;
+    const commandPrefixes = process.env.BOT_COMMAND_PREFIXES.split(',');
 
     if(!message.content || message.content.length == 0) {
         return;
