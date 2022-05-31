@@ -47,7 +47,7 @@ public class ConverterService : IConverterService
         IEnumerable<string> trackLinks = await _youtubeService.GetYouTubeLinks(tracks);
 
         var usePlaylists = Environment.GetEnvironmentVariable("GENERATE_PLAYLISTS");
-        if(usePlaylists != null && usePlaylists.ToLower() == "false") {
+        if(usePlaylists == null || usePlaylists.ToLower() != "false") {
             return new UrlResult {
                 links = trackLinks.ToList()
             };
