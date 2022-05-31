@@ -28,7 +28,7 @@ services:
     networks:
       - internal
     environment:
-      PLAYLIST_FOLDER: ${PLAYLIST_FOLDER}
+      PLAYLIST_FOLDER: /app/playlists
       PLAYLIST_HISTORY: ${PLAYLIST_HISTORY:-False}
       PORT: ${PORT:-80}
       MAX_TRACK_COUNT: ${MAX_TRACK_COUNT:-50}
