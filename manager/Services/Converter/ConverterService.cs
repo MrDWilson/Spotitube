@@ -4,6 +4,7 @@ using Spotitube.Services.Url;
 using Spotitube.Services.Spotify;
 using Spotitube.Services.YouTube;
 using Spotitube.Services.Playlist;
+using Spotitube.Models;
 
 public class ConverterService : IConverterService
 {
@@ -23,28 +24,38 @@ public class ConverterService : IConverterService
         _playlistService = playlistService;
     }
 
-    async public Task<string?> Convert(string url) 
+    async public Task<UrlResult?> Convert(string url) 
     {
         (string Id, UrlType urlType) = _urlHandler.ParseSpotifyUrl(url);
 
+        IEnumerable<string> tracks;
         if(urlType == UrlType.Track) 
         {
-            return await _youtubeService.GetYouTubeLink(Id);
+            return new UrlResult {
+                link = await _youtubeService.GetYouTubeLink(Id)
+            };
         }
-        
-        IEnumerable<string> tracks;
-        if (urlType == UrlType.Playlist)
+        else if (urlType == UrlType.Playlist)
         {
             tracks = await _spotifyService.GetPlaylistContents(Id);
         }
-        else if(urlType == UrlType.Album)
+        else
         {
             tracks = await _spotifyService.GetAlbumContents(Id);
         }
-        else return null;
 
         IEnumerable<string> trackLinks = await _youtubeService.GetYouTubeLinks(tracks);
+
+        var usePlaylists = Environment.GetEnvironmentVariable("GENERATE_PLAYLISTS");
+        if(usePlaylists != null && usePlaylists.ToLower() == "false") {
+            return new UrlResult {
+                links = trackLinks.ToList()
+            };
+        }
+
         string playlistName = await _playlistService.Convert(trackLinks);
-        return playlistName;
+        return new UrlResult {
+            playlist = playlistName
+        };
     }
 }

@@ -5,9 +5,18 @@ using Spotitube.Models;
 public class YouTubeService : IYouTubeService
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly int TRACK_DELAY;
 
-    public YouTubeService(IHttpClientFactory httpClientFactory) =>
+    public YouTubeService(IHttpClientFactory httpClientFactory) 
+    {
         _httpClientFactory = httpClientFactory;
+
+        var trackDelay = Environment.GetEnvironmentVariable("TRACK_DELAY") ?? "10";
+        if(!int.TryParse(trackDelay, out TRACK_DELAY)) 
+        {
+            throw new Exception("TRACK_DELAY environment variable must be a number.");
+        }
+    }
 
     async public Task<string> GetYouTubeLink(string trackId) 
     {
@@ -23,7 +32,7 @@ public class YouTubeService : IYouTubeService
         foreach(var track in trackIds) 
         {
             tracks.Add(await GetTrackLink(httpClient, track));
-            await Task.Delay(10);
+            await Task.Delay(TRACK_DELAY);
         }
 
         return tracks;

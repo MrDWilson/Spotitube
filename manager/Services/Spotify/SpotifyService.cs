@@ -5,9 +5,18 @@ using SpotifyAPI.Web;
 public class SpotifyService : ISpotifyService
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly int MAX_TRACK_COUNT;
 
-    public SpotifyService(IHttpClientFactory httpClientFactory) =>
+    public SpotifyService(IHttpClientFactory httpClientFactory) 
+    {
         _httpClientFactory = httpClientFactory;
+
+        var trackCount = Environment.GetEnvironmentVariable("MAX_TRACK_COUNT") ?? "50";
+        if(!int.TryParse(trackCount, out MAX_TRACK_COUNT))
+        {
+            throw new Exception("MAX_TRACK_COUNT environment variable must be a number.");
+        }
+    }
 
     async public Task<IEnumerable<string>> GetAlbumContents(string albumId) 
     {
@@ -18,7 +27,7 @@ public class SpotifyService : ISpotifyService
         List<string> trackIds = new();
         await foreach(var track in spotify.Paginate(album.Tracks)) 
         {
-            if(trackIds.Count == 50) 
+            if(trackIds.Count == MAX_TRACK_COUNT) 
             {
                 break;
             }
@@ -42,7 +51,7 @@ public class SpotifyService : ISpotifyService
 
         await foreach(var track in spotify.Paginate(playlist)) 
         {
-            if(trackIds.Count == 50) 
+            if(trackIds.Count == MAX_TRACK_COUNT) 
             {
                 break;
             }

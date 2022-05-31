@@ -33,4 +33,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://*:80");
+string rawPort = Environment.GetEnvironmentVariable("PORT") ?? "80";
+if(!int.TryParse(rawPort, out int PORT)) {
+    throw new Exception("PORT environment variable must be a number.");
+}
+
+app.Run($"http://*:{PORT}");

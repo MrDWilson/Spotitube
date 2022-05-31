@@ -1,6 +1,7 @@
 namespace Spotitube.Services.Converter;
+using Spotitube.Models;
 
 public interface IConverterService
 {
-    public Task<string?> Convert(string url);
+    public Task<UrlResult> Convert(string url);
 }

@@ -4,7 +4,7 @@ const express = require('express');
 const SpotifyToYoutube = require('spotify-to-youtube');
 const SpotifyWebApi = require('spotify-web-api-node');
 const axios = require('axios');
-// Constants
+
 const PORT = 80;
 const HOST = '0.0.0.0';
 
@@ -16,7 +16,6 @@ async function getSong(song) {
   return await spotifyToYoutube(song);
 }
 
-// App
 const app = express();
 app.use(express.json());
 

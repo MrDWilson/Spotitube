@@ -22,7 +22,7 @@ public class PlaylistService : IPlaylistService
         string newPlaylistFile = Path.Join(playlistFolder, playlistFile);
         await File.WriteAllTextAsync(newPlaylistFile, allLinks);
 
-        return "playlist " + playlistName;
+        return playlistName;
     }
 
     public void ClearPlaylistCache() 
