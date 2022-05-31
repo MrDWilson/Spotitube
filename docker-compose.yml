@@ -39,7 +39,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - ~/playlists:/app/playlists
+      - ${PLAYLIST_FOLDER}:/app/playlists
   spotitube_bot:
     container_name: spotitube_bot
     networks:
