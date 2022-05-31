@@ -5,8 +5,10 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const makeRequest = async (url) => await (await axios.get(url));
 const makePostRequest = async (url, data) => await (await axios.post(url, data));
 
+const COMMAND_PREFIXES = process.env.BOT_COMMAND_PREFIXES;
+
 client.on('ready', () => {
-    if(!commandPrefixes) {
+    if(!COMMAND_PREFIXES) {
         throw 'Environment variable "BOT_COMMAND_PREFIXES" must be set when using the Discord bot.'
     }
 
@@ -14,7 +16,7 @@ client.on('ready', () => {
 });
 
 client.on("messageCreate", (message) => {
-    const commandPrefixes = process.env.BOT_COMMAND_PREFIXES.split(',');
+    const prefixes = COMMAND_PREFIXES.split(',');
 
     if(!message.content || message.content.length == 0) {
         return;
@@ -22,7 +24,7 @@ client.on("messageCreate", (message) => {
 
     const inputCommandPrefix = message.content[0];
 
-    if(inputCommandPrefix && commandPrefixes.includes(inputCommandPrefix)) {
+    if(inputCommandPrefix && prefixes.includes(inputCommandPrefix)) {
         let command = message.content.slice(1);
 
         if((command.startsWith("play") || command.startsWith("queue")) && command.includes("spotify")) {
