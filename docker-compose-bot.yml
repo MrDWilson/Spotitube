@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  spotitube_bot:
+    container_name: spotitube_bot
+    networks:
+      - spotitube
+      - web
+    expose:
+      - "80"
+      - "443"
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_COMMAND_PREFIXES: ${BOT_COMMAND_PREFIXES}
+    build:
+      context: ./bot/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+networks:
+  spotitube:
+    external:
+      name: spotitube
+  web:
+    external:
+      name: ${EXTERNAL_NETWORK_NAME}

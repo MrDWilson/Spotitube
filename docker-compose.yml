@@ -3,7 +3,7 @@ services:
   spotitube_token:
     container_name: spotitube_token
     networks:
-      - internal
+      - spotitube
     build:
       context: ./token/
       dockerfile: Dockerfile
@@ -18,7 +18,7 @@ services:
   spotitube_songs:
     container_name: spotitube_songs
     networks:
-      - internal
+      - spotitube
     build:
       context: ./songs/
       dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
   spotitube_manager:
     container_name: spotitube_manager
     networks:
-      - internal
+      - spotitube
     environment:
       PLAYLIST_FOLDER: /app/playlists
       PLAYLIST_HISTORY: ${PLAYLIST_HISTORY:-False}
@@ -39,25 +39,10 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - ${PLAYLIST_FOLDER}:/app/playlists
-  spotitube_bot:
-    container_name: spotitube_bot
-    networks:
-      - internal
-      - web
-    expose:
-      - "80"
-      - "443"
-    environment:
-      BOT_TOKEN: ${BOT_TOKEN}
-      BOT_COMMAND_PREFIXES: ${BOT_COMMAND_PREFIXES}
-    build:
-      context: ./bot/
-      dockerfile: Dockerfile
-    restart: unless-stopped
+      - ${PLAYLIST_FOLDER:-./}:/app/playlists
 networks:
-  internal:
-    name: internal
+  spotitube:
+    name: spotitube
   web:
     external:
       name: ${EXTERNAL_NETWORK_NAME}

@@ -10,10 +10,8 @@ The bot wasn't able to process Spotify links, so I compiled
 these services to take those URLs and convert them to YouTube
 links for ease of use.
 
-If you would simply like an API to convert Spotify to YouTube
-links without the bot, this can be achieved by setting the
-`RUN_BOT` environment variable to `False` (the default is
-currently `True`).
+By default, only the API is ran without the Discord bot.
+To run the bot as well, see the `COMPOSE_FILE` environment variable.
 
 Services
 -
@@ -30,7 +28,7 @@ Environment Variables
 
 To set environment variables, it is recommended that you place a
 `.env` file in the root directory with entries in the format
-`ENV_VARIABLE_NAME=ENV_VARIABLE_VALUE`, seperated by new lines.
+`ENV_VARIABLE_NAME=ENV_VARIABLE_VALUE`, separated by new lines.
 
 | Variable name | Description | Default |
 | ----------- | ----------- | ----------- |
@@ -43,11 +41,12 @@ To set environment variables, it is recommended that you place a
 | EXTERNAL_NETWORK_NAME | The name of the Docker network to connect to for external web access. | No default, required. |
 | MAX_TRACK_COUNT | The maximum amount of songs to convert from a playlist or album. This can be useful as large playlists may take a while, and you may also get blocked by the Spotify API. | 50 |
 | TRACK_DELAY | The delay in milliseconds between Spotify API track requests. This should be left as default unless you are having issues with rate limiting. Try increasing it slightly if you do have issues. | 10 |
-| USE_BOT | Whether to enable the included Discord bot. Setting this to false will turn this into just an API. | True |
+| COMPOSE_FILE | The compose files to include. If you want to run the Discord bot, this must be set to `docker-compose.yml,docker-compose-bot.yml`. If you don't want to run the bot, this can be left as default. | docker-compose.yml |
+| COMPOSE_PATH_SEPARATOR | The character used to separate the values in `COMPOSE_FILE`. Recommend to use `,`. | The default is `:` on Linux and macOS, and `;` on Windows. It is recommended to set this value to `,` to remove this difference. |
 | BOT_TOKEN | The authorised token for you registed Discord bot. | Optional, only needed if `USE_BOT` is set to `True` |
-| BOT_COMMAND_PREFIXES | The prefixes to look for in Discord commands. | Optional, only needed if `USE_BOT` is set to `True`. Comma seperate values. |
-| GENERATE_PLAYLISTS | Whether to wrap playlists in .txt files seperated by new lines. This can be useful as some Discord music bots can consume text playlist files. This will simplify album and playlist results by returning just the playlist name, rather than a set of links. | True |
-| PLAYLIST_FOLDER | The folder on the host machine to map for playlist file saving. | Optional, only required if `GENERATE_PLAYLISTS` is set to `True`. |
+| BOT_COMMAND_PREFIXES | The prefixes to look for in Discord commands. | Optional, only needed if `USE_BOT` is set to `True`. Comma separate values. |
+| GENERATE_PLAYLISTS | Whether to wrap playlists in .txt files separated by new lines. This can be useful as some Discord music bots can consume text playlist files. This will simplify album and playlist results by returning just the playlist name, rather than a set of links. | True |
+| PLAYLIST_FOLDER | The folder on the host machine to map for playlist file saving. | Optional, only required if `GENERATE_PLAYLISTS` is set to `True`. Defaults to `./`, but it is recommended to change this. |
 | PLAYLIST_HISTORY | Whether to randomly generate the playlist names as GUIDs to allow history. If `False`, playlists will all be saved as `Spotify`, so will be overritten each time. | False |
 
 Help
