@@ -43,7 +43,4 @@ services:
 networks:
   spotitube:
     name: spotitube
-  web:
-    external:
-      name: ${EXTERNAL_NETWORK_NAME}
 
