@@ -28,7 +28,7 @@ client.on("messageCreate", (message) => {
         let command = message.content.slice(1);
 
         if((command.startsWith("play") || command.startsWith("queue")) && command.includes("spotify")) {
-            message.channel.send("Converting...");
+            message.channel.send("Converting, this might take a minute for playlists...");
             
             let splitUrl = command.split(' ');
 
@@ -42,7 +42,7 @@ client.on("messageCreate", (message) => {
             if(splitUrl.length > 2) {
                 let startIndexString = splitUrl[2];
                 start = Number(startIndexString);
-                if(Number.isNaN(startIndex)) {
+                if(Number.isNaN(start)) {
                     message.channel.send("If you want to pass a start index, please make sure it is a number");
                     return;
                 }
