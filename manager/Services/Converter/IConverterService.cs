@@ -3,5 +3,5 @@ using Spotitube.Models;
 
 public interface IConverterService
 {
-    public Task<UrlResult?> Convert(string url, bool generatePlaylists);
+    public Task<UrlResult?> Convert(string url, int start, bool generatePlaylists);
 }

@@ -24,7 +24,7 @@ public class ConverterService : IConverterService
         _playlistService = playlistService;
     }
 
-    async public Task<UrlResult?> Convert(string url, bool generatePlaylists) 
+    async public Task<UrlResult?> Convert(string url, int start, bool generatePlaylists) 
     {
         (string Id, UrlType urlType) = _urlHandler.ParseSpotifyUrl(url);
 
@@ -37,11 +37,11 @@ public class ConverterService : IConverterService
         }
         else if (urlType == UrlType.Playlist)
         {
-            tracks = await _spotifyService.GetPlaylistContents(Id);
+            tracks = await _spotifyService.GetPlaylistContents(Id, start);
         }
         else
         {
-            tracks = await _spotifyService.GetAlbumContents(Id);
+            tracks = await _spotifyService.GetAlbumContents(Id, start);
         }
 
         IEnumerable<string> trackLinks = await _youtubeService.GetYouTubeLinks(tracks);

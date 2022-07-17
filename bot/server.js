@@ -29,19 +29,28 @@ client.on("messageCreate", (message) => {
 
         if((command.startsWith("play") || command.startsWith("queue")) && command.includes("spotify")) {
             message.channel.send("Converting...");
+            
+            let splitUrl = command.split(' ');
 
-            if(!command.includes(' ')) {
+            if(splitUrl.length === 1) {
                 message.channel.send("Please include a URL in your command.");
                 return;
             }
 
-            let url = command.split(' ')[1];
-            if(url.length == 0) {
-                message.channel.send("Please include a URL in your command.");
+            let url = splitUrl[1];
+            let start = 1;
+            if(splitUrl.length > 2) {
+                let startIndexString = splitUrl[2];
+                start = Number(startIndexString);
+                if(Number.isNaN(startIndex)) {
+                    message.channel.send("If you want to pass a start index, please make sure it is a number");
+                    return;
+                }
             }
 
             const data = {
                 url: url,
+                start: start,
                 generatePlaylists: true
             };
             makePostRequest("http://spotitube_manager", data).then(res => {

@@ -18,10 +18,11 @@ public class SpotifyService : ISpotifyService
         }
     }
 
-    async public Task<IEnumerable<string>> GetAlbumContents(string albumId) 
+    async public Task<IEnumerable<string>> GetAlbumContents(string albumId, int start) 
     {
         var spotify = new SpotifyClient(await GetAccessToken());
 
+        albumId = albumId + $"?offset={start - 1}";
         var album = await spotify.Albums.Get(albumId);
 
         List<string> trackIds = new();
@@ -38,10 +39,11 @@ public class SpotifyService : ISpotifyService
         return trackIds;
     }
 
-    async public Task<IEnumerable<string>> GetPlaylistContents(string playlistId) 
+    async public Task<IEnumerable<string>> GetPlaylistContents(string playlistId, int start) 
     {
         var spotify = new SpotifyClient(await GetAccessToken());
 
+        playlistId = playlistId + $"?offset={start - 1}";
         var playlist = await spotify.Playlists.GetItems(playlistId);
 
         List<string> trackIds = new();
