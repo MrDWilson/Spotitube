@@ -18,7 +18,7 @@ public class SpotifyService : ISpotifyService
         }
     }
 
-    async public Task<IEnumerable<string>> GetAlbumContents(string albumId, int start) 
+    async public Task<IEnumerable<string>> GetAlbumContents(string albumId) 
     {
         var spotify = new SpotifyClient(await GetAccessToken());
 

@@ -41,7 +41,7 @@ public class ConverterService : IConverterService
         }
         else
         {
-            tracks = await _spotifyService.GetAlbumContents(Id, start);
+            tracks = await _spotifyService.GetAlbumContents(Id);
         }
 
         IEnumerable<string> trackLinks = await _youtubeService.GetYouTubeLinks(tracks);
