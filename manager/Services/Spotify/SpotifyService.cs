@@ -22,17 +22,11 @@ public class SpotifyService : ISpotifyService
     {
         var spotify = new SpotifyClient(await GetAccessToken());
 
-        albumId = albumId + $"?offset={start - 1}";
         var album = await spotify.Albums.Get(albumId);
 
         List<string> trackIds = new();
         await foreach(var track in spotify.Paginate(album.Tracks)) 
         {
-            if(trackIds.Count == MAX_TRACK_COUNT) 
-            {
-                break;
-            }
-
             trackIds.Add(track.Id);
         }
 
@@ -43,8 +37,9 @@ public class SpotifyService : ISpotifyService
     {
         var spotify = new SpotifyClient(await GetAccessToken());
 
-        playlistId = playlistId + $"?offset={start - 1}";
-        var playlist = await spotify.Playlists.GetItems(playlistId);
+        var req = new PlaylistGetItemsRequest();
+        req.Offset = start - 1;
+        var playlist = await spotify.Playlists.GetItems(playlistId, req);
 
         List<string> trackIds = new();
         if(playlist == null) {
