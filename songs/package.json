@@ -5,15 +5,16 @@
   "author": "Danny Wilson <danny@wlsn.xyz>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "express": "^4.18.1",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "spotify-to-youtube": "^1.0.2",
-    "spotify-web-api-node": "^5.0.2"
-  },
-  "overrides": {
-    "youtube-music-api": "1.0.5"
+    "spotify-web-api-node": "^5.0.2",
+    "youtube-music-api": "^1.0.6"
   }
 }
